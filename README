@@ -1,0 +1,9 @@
+This is a quick and dirty proof of concept driving Android with Cucumber!
+
+There are 2 key ingredients to this tasty treat:
+cucumber-jvm & nativedriver
+
+http://code.google.com/p/nativedriver/
+https://github.com/cucumber/cucumber-jvm
+
+More to follow...
