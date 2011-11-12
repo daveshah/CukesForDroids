@@ -1,0 +1,6 @@
+Post starting up the HelloAndroid application:
+adb shell am instrument com.leandog/com.google.android.testing.nativedriver.server.ServerInstrumentation
+adb forward tcp:54129 tcp:54129
+
+check adb logcat for:
+I/com.google.android.testing.nativedriver.server.ServerInstrumentation(  273): Jetty started on port 54129

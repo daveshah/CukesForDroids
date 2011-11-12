@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HelloAndroid</string>
+    <string name="text_view_text">Hello Cucumber Driving Android!</string>
+    <string name="clicked_text">Cucumber Helped Click My Button!</string>
+
+</resources>
