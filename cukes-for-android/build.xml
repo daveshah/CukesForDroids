@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="cukes-for-android">
+    <property environment="env"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.5"/>
+    <property name="source" value="1.5"/>
+    <path id="Maven Dependencies.libraryclasspath">
+        <pathelement location="../../../.m2/repository/info/cukes/cucumber-core/1.0.0.RC10/cucumber-core-1.0.0.RC10.jar"/>
+        <pathelement location="../../../.m2/repository/info/cukes/gherkin/2.7.4/gherkin-2.7.4.jar"/>
+        <pathelement location="../../../.m2/repository/com/thoughtworks/xstream/xstream/1.4.2/xstream-1.4.2.jar"/>
+        <pathelement location="../../../.m2/repository/com/googlecode/java-diff-utils/diffutils/1.2.1/diffutils-1.2.1.jar"/>
+        <pathelement location="../../../.m2/repository/com/google/code/gson/gson/2.1/gson-2.1.jar"/>
+        <pathelement location="../../../.m2/repository/info/cukes/cucumber-html/0.2.1/cucumber-html-0.2.1.jar"/>
+        <pathelement location="../../../.m2/repository/info/cukes/cucumber-picocontainer/1.0.0.RC10/cucumber-picocontainer-1.0.0.RC10.jar"/>
+        <pathelement location="../../../.m2/repository/info/cukes/cucumber-java/1.0.0.RC10/cucumber-java-1.0.0.RC10.jar"/>
+        <pathelement location="../../../.m2/repository/info/cukes/cucumber-junit/1.0.0.RC10/cucumber-junit-1.0.0.RC10.jar"/>
+        <pathelement location="../../../.m2/repository/org/mockito/mockito-all/1.9.0/mockito-all-1.9.0.jar"/>
+        <pathelement location="../../../.m2/repository/org/picocontainer/picocontainer/2.14.1/picocontainer-2.14.1.jar"/>
+        <pathelement location="../../../.m2/repository/junit/junit/4.10/junit-4.10.jar"/>
+        <pathelement location="../../../.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+    </path>
+    <path id="cukes-for-android.classpath">
+        <pathelement location="target/classes"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+        <pathelement location="libs/client-standalone.jar"/>
+    </path>
+    <path id="run.cukes-for-android.classpath">
+        <path refid="cukes-for-android.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="target/classes"/>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/java">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/resources">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+                <exclude name="**"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="target/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/classes" source="${source}" target="${target}">
+            <src path="src/main/java"/>
+            <classpath refid="cukes-for-android.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/classes" source="${source}" target="${target}">
+            <src path="src/main/resources"/>
+            <exclude name="**"/>
+            <classpath refid="cukes-for-android.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="cukes-for-android">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.leandog.hello_android_Test" todir="${junit.output.dir}"/>
+            <classpath refid="run.cukes-for-android.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+    <target name="test" depends="build">
+        <junit fork="yes" haltonfailure="yes" failureProperty="test.failure">
+            <formatter type="plain" usefile="false" />
+            <classpath refid="run.cukes-for-android.classpath" />
+            <batchtest>
+                <fileset dir="target/classes" includes="**/*Test*.class" />
+            </batchtest>
+        </junit>
+    </target>
+</project>
