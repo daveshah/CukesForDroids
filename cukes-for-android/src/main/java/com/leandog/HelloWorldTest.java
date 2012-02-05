@@ -7,6 +7,6 @@ import cucumber.junit.Feature;
 
 @RunWith(Cucumber.class)
 @Feature("hello_world.feature")
-public class hello_android_Test {
+public class HelloWorldTest {
 
 }
